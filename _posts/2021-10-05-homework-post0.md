@@ -9,12 +9,13 @@ Use **pandas** to deal with data
 
 
 ```python
-import pandas as pd
+import pandas as pd 
 url = "https://raw.githubusercontent.com/PhilChodrow/PIC16B/master/datasets/palmer_penguins.csv"
 penguins = pd.read_csv(url)
 ```
 
-Read 5 lines
+Read 5 lines to see what kind of data we have, and we find that we already have Culmen Length,Depth,and Body Mass.  
+So we need to calculate the ***area of Culmen***.
 
 
 ```python
@@ -172,7 +173,10 @@ penguins.head(5)
 
 
 ```python
-penguins=penguins.dropna(subset=['Culmen Length (mm)','Culmen Depth (mm)','Body Mass (g)'])
+penguins=penguins.dropna(subset=['Culmen Length (mm)','Culmen Depth (mm)','Body Mass (g)']) 
+
+# Here we drop data with NaN value in Culmen Length, Depth and Body Mass.
+
 penguins.head(5)
 ```
 
@@ -329,6 +333,8 @@ Calculate the area of penguins' culmen
 
 ```python
 penguins['Culmen Area (mm^2)']=penguins['Culmen Length (mm)']*penguins['Culmen Depth (mm)']/2
+
+# We add a new column called 'Culmen Area (mm^2)'
 ```
 
 
@@ -495,16 +501,16 @@ Then we need to visualize our data by using ***seaborn*** and ***matplotlib***, 
 
 
 ```python
-import seaborn as sns
+import seaborn as sns 
 from matplotlib import pyplot as plt
 ```
 
 
 ```python
-sns.scatterplot(data = penguins, #
-                x = "Culmen Area (mm^2)", #
-                y = "Body Mass (g)", 
-                hue = "Species",
+sns.scatterplot(data = penguins,            
+                x = "Culmen Area (mm^2)",   # x axis is from Culmen Area
+                y = "Body Mass (g)",        # y axis is from Body Mass
+                hue = "Species",            # Mark different species with different colors
                 )
 plt.legend(bbox_to_anchor=(1.05, 1),loc=2)
 sns.despine()
@@ -516,4 +522,4 @@ sns.despine()
     
 
 
-It seems that the Culmen Area and Body Mass are linear dependence in each specie.
+It seems that the Culmen Area and Body Mass are ***linear dependence*** in each specie.
