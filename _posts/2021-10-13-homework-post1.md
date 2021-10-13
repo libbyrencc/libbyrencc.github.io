@@ -2304,6 +2304,7 @@ fig.update_coloraxes(cmid=0)
 fig.update_coloraxes(colorbar_title_text="Avg Yearly Increase(C)",colorbar_title_font_size=10)
 fig.show()
 ```
+![png](1.png)
 
 Now we should able to finish the function.
 
@@ -2377,7 +2378,7 @@ fig = temperature_coefficient_plot("India", 1980, 2020, 1,
 
 fig.show()
 ```
-
+![png](2.png)
 
 ## extra Question 1: Is there any relations about climate change and LATITUDE given month and year range?
 
@@ -3333,7 +3334,7 @@ fig = px.choropleth(change_2015_2020_Jan,
 
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 ```
-
+![png](3.png)
 
 This plot is showing that not all country are getting warmer,some even getting much colder in a very fast speed.  
 And the situation is consistent with the first extra question, the climate change in polar area are stronger than equatorial region.
