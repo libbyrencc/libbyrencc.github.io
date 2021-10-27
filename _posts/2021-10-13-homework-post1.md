@@ -3111,7 +3111,7 @@ fig.update_coloraxes(cmid=0)
 fig.add_vline(x=0)
 fig.show()
 ```
-![png](3.png)
+![png](3a.png)
 #### As we see in this plot, the temperature's change is bigger when in high latitude, which is bad for the polar regions.  
 #### And most people are living within the latitude (-60,60), we may underestimating such climate change.
 #### But the glaciers are melting faster than we think.
