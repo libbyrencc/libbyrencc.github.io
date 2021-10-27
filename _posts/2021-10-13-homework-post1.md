@@ -3,6 +3,7 @@ layout: post
 title: Post 1
 ---
 
+
 # Data analysis of Climate change
 
 ## I. Create a Database
@@ -1009,7 +1010,7 @@ countries.head(5)
 countries.to_sql("country", db, if_exists = "replace", index = False)
 ```
 
-    C:\conda\lib\site-packages\pandas\core\generic.py:2779: UserWarning: The spaces in these column names will not be changed. In pandas versions < 0.14, spaces were converted to underscores.
+    H:\conda\lib\site-packages\pandas\core\generic.py:2779: UserWarning: The spaces in these column names will not be changed. In pandas versions < 0.14, spaces were converted to underscores.
       sql.to_sql(
     
 
@@ -2305,7 +2306,6 @@ fig.update_coloraxes(colorbar_title_text="Avg Yearly Increase(C)",colorbar_title
 fig.show()
 ```
 ![png](1.png)
-
 Now we should able to finish the function.
 
 We need month_name to replace the month number, so we write a function
@@ -2379,7 +2379,6 @@ fig = temperature_coefficient_plot("India", 1980, 2020, 1,
 fig.show()
 ```
 ![png](2.png)
-
 ## extra Question 1: Is there any relations about climate change and LATITUDE given month and year range?
 
 First we write a function to query data with input latitude range (min, low)
@@ -2886,7 +2885,7 @@ def avg_temp_change_latitude(latmin,latmax,year_begin,year_end,month,min_obs):
 
 
 ```python
-a=avg_temp_change_latitude(84,90,2000,2010,8,5)
+a=avg_temp_change_latitude(-10,10,2000,2010,8,5)
 a
 #This shows that temperature in latitude(-10,10) is moving 0.02 C higher in average during year 2000-2010 in Aug
 ```
@@ -2894,7 +2893,7 @@ a
 
 
 
-    nan
+    0.02639024342579943
 
 
 
@@ -3104,23 +3103,15 @@ m
 
 
 ```python
-sns.relplot(data = m, 
-            x = "temps_change", 
-            y = "latitude",
-            alpha = 1, 
-            height = 4,
-            aspect = 1.7)
-plt.plot([0,0], [-90,90], color = "lightgray", zorder = 0)
-plt.gca().set(title = "Yearly change in temperature by Latitude, 2010-2020 in Aug")
-sns.despine()
+fig = px.scatter(m, x="temps_change", 
+                 y="latitude",
+                 title ="Yearly change in temperature by Latitude, 2010-2020 in Aug",
+                 color="temps_change")
+fig.update_coloraxes(cmid=0)
+fig.add_vline(x=0)
+fig.show()
 ```
-
-
-    
-![png](output_100_0.png)
-    
-
-
+![png](3.png)
 #### As we see in this plot, the temperature's change is bigger when in high latitude, which is bad for the polar regions.  
 #### And most people are living within the latitude (-60,60), we may underestimating such climate change.
 #### But the glaciers are melting faster than we think.
@@ -3131,29 +3122,21 @@ Now let me write the function for auto plotting
 ```python
 def latitude_temp_change_plot(year_begin,year_end,month,min_obs,inteval_number):
     data_set=latitude_temps_change(year_begin,year_end,month,min_obs,inteval_number)
-    sns.relplot(data = data_set, 
-            x = "temps_change", 
-            y = "latitude",
-            alpha = 1, 
-            height = 4,
-            aspect = 1.7)
-    plt.plot([0,0], [-90,90], color = "lightgray", zorder = 0)
-    plt.gca().set(title = f"Yearly change in temperature by Latitude between {year_begin}-{year_end} in {month_name(month)}")
-    sns.despine()
+    fig = px.scatter(m, x="temps_change", 
+                 y="latitude",
+                 title =f"Yearly change in temperature by Latitude between {year_begin}-{year_end} in {month_name(month)}",
+                 color="temps_change")
+    fig.update_coloraxes(cmid=0)
+    fig.add_vline(x=0)
+    fig.show()
 ```
-
+![png](4.png)
 Try if the function is good.
 
 
 ```python
 latitude_temp_change_plot(2010,2020,8,5,30)
 ```
-
-
-    
-![png](output_105_0.png)
-    
-
 
 ### extra Question 2:  How does climate change differ between countries?
 
@@ -3330,11 +3313,12 @@ fig = px.choropleth(change_2015_2020_Jan,
                     locations = "Country",
                     locationmode = "country names",
                     color = "change", 
-                    height = 300)
-
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+                    height = 300,
+                    title ="Yearly change in temperature by Country between 2015-2020 in Jan")
+fig.update_coloraxes(cmid=0)
+fig.update_layout(margin={"r":0,"t":25,"l":0,"b":3})
 ```
-![png](3.png)
+![png](5.png)
 
 This plot is showing that not all country are getting warmer,some even getting much colder in a very fast speed.  
 And the situation is consistent with the first extra question, the climate change in polar area are stronger than equatorial region.
@@ -3350,7 +3334,9 @@ def change_by_country_plot(year_begin,year_end,month):
                     locations = "Country",
                     locationmode = "country names",
                     color = "change", 
-                    height = 300)
+                    height = 300,
+                    title =f"Yearly change in temperature by Country between {year_begin}-{year_end} in {month_name(month)}")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.show()
 ```
+
