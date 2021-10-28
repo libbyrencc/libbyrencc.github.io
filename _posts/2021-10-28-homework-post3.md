@@ -47,14 +47,17 @@ The submit page should include codes as follows:
 And we need to add navigate bar to this page, so add the following code to top of the submit.html
 
 
-```python
+```html
+{% raw %}
 {% extends 'base.html' %}
+{% endraw %}
 ```
 
 And for showing success/error to users:
 
 
 ```html
+{% raw %}
   {% if thanks %}
     <br>
     <div class="cr">Thanks for submitting</div>
@@ -64,6 +67,7 @@ And for showing success/error to users:
     <br>
     Oh no, we couldn't read that! 
   {% endif %}
+  {% endraw %}
 ```
 
 Now we need to add code to app.py to get and store the data from the web page.  
@@ -153,10 +157,12 @@ And we need to use a loop to showing the messages in view.html
 
 ```html
 <ul class="cr">
+    {% raw %}
     {% for message in messages %}
       <div class="cr"><li>{{ message[1]|e }}</li>
       <i>--{{ message[0]|e }}</i></div>
     {% endfor %}
+    {% endraw %}
 </ul>
 ```
 
