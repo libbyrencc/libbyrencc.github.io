@@ -34,7 +34,7 @@ And now we need to write our page for users to submit their messages.And we coul
 The submit page should include codes as follows:
 
 
-```python
+```html
 <form method="post" enctype="multipart/form-data" class="cr">
     <label for="message">Your message</label><br>
     <input type="text" name="message" id="message"><br>
@@ -54,7 +54,7 @@ And we need to add navigate bar to this page, so add the following code to top o
 And for showing success/error to users:
 
 
-```python
+```html
   {% if thanks %}
     <br>
     <div class="cr">Thanks for submitting</div>
@@ -151,7 +151,7 @@ def random_messages(n):
 And we need to use a loop to showing the messages in view.html
 
 
-```python
+```html
 <ul class="cr">
     {% for message in messages %}
       <div class="cr"><li>{{ message[1]|e }}</li>
