@@ -53,15 +53,23 @@ and yeild scrapy.Request
 ```python
  def parse(self, response):
         next_page = response.css("a.ipc-metadata-list-item__icon-link").attrib["href"]
+        #Find the partial url by located tag <a> with
+        #class= ipc-metadata-list-item__icon-link
+        # and url is in "herf"
         if next_page:           
-            next_page=response.urljoin(next_page) #Here we make the URL complete
+            next_page=response.urljoin(next_page) 
+            #Here we make the URL complete
             yield scrapy.Request(next_page,callback= self.prase_full_credits)
+            #Call next function
 ```
 
 ### 2. prase_full_credits(self, response)  
 Now we are at the Cast&Crew page, next we should look at each actors' page, and call the next method prase_actor_page(self,response)  
 
 We will use the css selector and the list comprehension to mimic the process of clicking on the headshots on this page.
+
+Here we select `<a>` tag, which is under `<td>` tag with `class ='primary_photo'`, and url is still in `"herf"`.
+Then we iterate each Cast&Crews' URL, use it as a parameter to call next method.
 
 
 ```python
@@ -79,10 +87,15 @@ Finally we yield a dictionary with two key-value pairs, of the form {"actor" : a
 
 ```python
 def prase_actor_page(self,response):
-        actor_name=response.css("h1.header span.itemprop::text").get() #get actor's name
-        for quote in response.css("div.filmo-row"): #get the name of each his/her works
+        actor_name=response.css("h1.header span.itemprop::text").get() 
+        #get actor's name
+        #the name is in <h1 class="header"><span class+"itemprop">name<\span><\h1>
+        for quote in response.css("div.filmo-row"): 
+            #get a list of  his/her works
             movie_or_TV_name=quote.css("b a::text").get()
-            yield {"actor" : actor_name, "movie_or_TV_name" : movie_or_TV_name} #yeild an dictionary
+            # the name is in <b> <a>work name<\a><\b>, under tag <div> with class ="filmo-row"
+            yield {"actor" : actor_name, "movie_or_TV_name" : movie_or_TV_name} 
+            #yeild an dictionary
 ```
 
 Now we are done! The finally project looks like below:
